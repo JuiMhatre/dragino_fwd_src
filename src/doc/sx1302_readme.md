@@ -88,6 +88,7 @@ use the LoRa concentrator:
 * lgw_spectral_scan_get_status, to get the status of the current scan
 * lgw_spectral_scan_get_results, to get the results of the completed scan
 * lgw_spectral_scan_abort, to abort curretn scan
+* lgw_get_antenna_params, get phase and amplitude of antenna params
 
 For an standard application, include only this module.
 The use of this module is detailed on the usage section.

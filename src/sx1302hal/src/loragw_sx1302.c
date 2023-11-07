@@ -458,6 +458,36 @@ int sx1302_radio_reset(uint8_t rf_chain, lgw_radio_type_t type) {
     return LGW_REG_SUCCESS;
 }
 
+int sx1302_set_antenna_params(uint32_t amp, uint32_t phi,uint8_t rf_chain_num) {
+    uint16_t reg_amp;
+    uint16_t reg_phi;
+    int err_amp;
+    int err_phi;
+    /* Check input parameters */
+    DEBUG_PRINTF(" --- %s\n", "ANTENNA PARAMS SETTING JUI");
+    if (rf_chain >= LGW_RF_CHAIN_NB) {
+        DEBUG_MSG("ERROR: invalid RF chain\n");
+        return LGW_REG_ERROR;
+    }
+    reg_amp = REG_SELECT(rf_chain,  SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_A_AMP_COEFF,
+                                SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_B_AMP_COEFF);
+    reg_phi = REG_SELECT(rf_chain, SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_A_PHI_COEFF,
+                                    SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_B_PHI_COEFF);
+    err_amp = lgw_reg_w(reg_amp, (int32_t)amp)
+    err_phi = lgw_reg_w(reg_phi, (int32_t)phi)
+    
+    if (err_amp != LGW_REG_SUCCESS) {
+        printf("ERROR: failed to set amplitude for radio %u\n", rf_chain);
+        return LGW_REG_ERROR;
+    }
+
+    if (err_phi != LGW_REG_SUCCESS) {
+        printf("ERROR: failed to set phase for radio %u\n", rf_chain);
+        return LGW_REG_ERROR;
+    }
+
+    return LGW_REG_SUCCESS;
+}
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 int sx1302_radio_set_mode(uint8_t rf_chain, lgw_radio_type_t type) {

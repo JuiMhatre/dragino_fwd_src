@@ -853,7 +853,7 @@ int lgw_debug_setconf(struct lgw_conf_debug_s * conf) {
 int lgw_start(void) {
     int i, err;
     char *pt = NULL;
-
+    DEBUG_PRINTF(" --- %s\n", "LGW STARTED JUI");
     DEBUG_PRINTF(" --- %s\n", "IN");
 
     pt = getenv("I2C_DEVICE");
@@ -919,6 +919,7 @@ int lgw_start(void) {
                 printf("ERROR: failed to set mode for radio %d\n", i);
                 return LGW_HAL_ERROR;
             }
+            err = sx1302_set_antenna_params(1,90,i)
         }
     }
 
@@ -1595,7 +1596,14 @@ int lgw_get_eui(uint64_t* eui) {
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
+int lgw_get_antenna_params(uint32_t* amp0, uint32_t* amp1, uint32_t phi0, uint32_t phi1){
+    int err = LGW_REG_ERROR;
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_A_AMP_COEFF, amp0)
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_B_AMP_COEFF, amp1)
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_A_PHI_COEFF, phi0)
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_B_PHI_COEFF, phi1)
+    return LGW_REG_SUCCESS
+}
 int lgw_get_temperature(float* temperature) {
     int err = LGW_HAL_ERROR;
 

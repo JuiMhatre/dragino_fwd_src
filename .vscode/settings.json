@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "loragw_hal.h": "c",
+        "loragw_aux.h": "c",
+        "loragw_reg.h": "c"
+    }
+}

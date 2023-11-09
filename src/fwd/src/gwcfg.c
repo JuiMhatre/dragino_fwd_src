@@ -895,10 +895,10 @@ static int parse_SX130x_configuration(const char* conf_file) {
         }
     }
     lgw_log(LOG_INFO, "INFO~ [LoadCFG] antenna_gain %d dBi\n", GW.hal.antenna_gain);
-    uint32_t amp0 =0;
-    uint32_t phi0 =0;
-    uint32_t phi1 =0;
-    uint32_t amp1 =0;
+    int32_t amp0 =0;
+    int32_t phi0 =0;
+    int32_t phi1 =0;
+    int32_t amp1 =0;
     res = lgw_get_antenna_params(&amp0, &amp1, &phi0, &phi1);
     if (res != LGW_REG_SUCCESS){
         print("ERROR: field to get antenna params\n");

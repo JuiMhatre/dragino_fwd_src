@@ -919,7 +919,18 @@ int lgw_start(void) {
                 printf("ERROR: failed to set mode for radio %d\n", i);
                 return LGW_HAL_ERROR;
             }
-            err = sx1302_set_antenna_params(1,90,i)
+            err = sx1302_set_antenna_params(1,90,i);
+            int32_t amp0 =0;
+            int32_t phi0 =0;
+            int32_t phi1 =0;
+            int32_t amp1 =0;
+            res = lgw_get_antenna_params(&amp0, &amp1, &phi0, &phi1);
+            if (res != LGW_REG_SUCCESS){
+                print("ERROR: field to get antenna params\n");
+                return LGW_REG_ERROR;
+            }
+            DEBUG_PRINTF("INFO~ [LoadCFG] Rf chain 0 amp: %d phi: %d, Rf chain 1 amp: %d phi: %d\n", amp0,amp1,phi0, phi1);
+
         }
     }
 
@@ -1596,13 +1607,13 @@ int lgw_get_eui(uint64_t* eui) {
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-int lgw_get_antenna_params(uint32_t* amp0, uint32_t* amp1, uint32_t phi0, uint32_t phi1){
+int lgw_get_antenna_params(int32_t* amp0, int32_t* amp1, int32_t phi0, int32_t phi1){
     int err = LGW_REG_ERROR;
-    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_A_AMP_COEFF, amp0)
-    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_B_AMP_COEFF, amp1)
-    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_A_PHI_COEFF, phi0)
-    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_B_PHI_COEFF, phi1)
-    return LGW_REG_SUCCESS
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_A_AMP_COEFF, amp0);
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_AMP_COEFF_RADIO_B_AMP_COEFF, amp1);
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_A_PHI_COEFF, phi0);
+    lgw_reg_r(SX1302_REG_RADIO_FE_IQ_COMP_PHI_COEFF_RADIO_B_PHI_COEFF, phi1);
+    return LGW_REG_SUCCESS;
 }
 int lgw_get_temperature(float* temperature) {
     int err = LGW_HAL_ERROR;

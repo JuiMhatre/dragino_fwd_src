@@ -141,7 +141,7 @@ int sx1302_radio_reset(uint8_t rf_chain, lgw_radio_type_t type);
 @param rf_chain The RF chain index of the radio to be reset
 @return LGW_REG_SUCCESS if success, LGW_REG_ERROR otherwise
 */
-int sx1302_set_antenna_params(uint32_t amp, uint32_t phi,uint8_t rf_chain_num)
+int sx1302_set_antenna_params(int32_t amp, int32_t phi,uint8_t rf_chain_num);
 /**
 @brief Configure the radio type for the given RF chain
 @param rf_chain The RF chain index to be configured

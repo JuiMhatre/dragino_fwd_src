@@ -924,9 +924,9 @@ int lgw_start(void) {
             int32_t phi0 =0;
             int32_t phi1 =0;
             int32_t amp1 =0;
-            res = lgw_get_antenna_params(&amp0, &amp1, &phi0, &phi1);
-            if (res != LGW_REG_SUCCESS){
-                print("ERROR: field to get antenna params\n");
+            err = lgw_get_antenna_params(&amp0, &amp1, &phi0, &phi1);
+            if (err != LGW_REG_SUCCESS){
+                printf("ERROR: field to get antenna params\n");
                 return LGW_REG_ERROR;
             }
             DEBUG_PRINTF("INFO~ [LoadCFG] Rf chain 0 amp: %d phi: %d, Rf chain 1 amp: %d phi: %d\n", amp0,amp1,phi0, phi1);
